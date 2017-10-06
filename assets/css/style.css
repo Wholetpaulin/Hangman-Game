@@ -1,0 +1,14 @@
+*{
+	font-family: 'Stalinist One', cursive, Times, Times New Roman, serif;
+	color: #ffffff;
+	letter-spacing: 3px;
+}
+
+h2{
+	color: #ffffff;
+}
+
+.jumbotron{
+
+	background: url('https://steamuserimages-a.akamaihd.net/ugc/396678672082374532/4FF963CA69314F9085C6218A9D1ABB66FBDED23B/');
+}

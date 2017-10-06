@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Hangman</title>
+
+	<!-- Added link to the jQuery Library -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+	<!-- Added a link to Bootstrap-->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+	<link href="https://fonts.googleapis.com/css?family=Stalinist+One" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="assets/css/style.css"> 
+</head>
+<body>
+
+  <div class="jumbotron">
+
+    <h2 class="text-center">Starcraft Hangman!</h2>
+
+    <div class="text-center">
+
+      <!-- Here we have our start button -->
+      <button id="start-button" class="btn btn-primary btn-lg "><h1><span class="glyphicon glyphicon-ok"></span></h1>Start</button>
+	<div id = "playZone">
+		<!--This is where the spaces and letters will go-->
+	</div>
+	<div id = "guessZone">
+		<!--This is where the number of guesses will display-->
+	</div>
+    </div>
+
+  </div>
+
+  <!-- Here we have div called "random-number" where our random number will go -->
+  <h2 class="text-center" id="spacePlace"></h2>
+
+  <script type="text/javascript">
+
+    $(document).ready(function() {
+
+//-------------SETTING UP THE GAMEBOARD----------
+//===============================================
+    	var wins = 0;
+    	var displayWord= "";						//This is the series of spaces that display
+    	var guesses = 6;							//This holds how many guesses
+    	var i = 0;
+    	var less = 0;
+
+
+    	function reset(message){
+    		wins = 0;
+    		displayWord= "";						//This is the series of spaces that display
+    		guesses = 6;							//This holds how many guesses
+    		i = 0;
+    		less = 0;
+    		$("#start-button").show();
+    		$("#start-button").html(message);
+    		$("#guessZone").html("");
+    		$("#playZone").html("")
+    	};
+      // When start-button is clicked...
+      $("#start-button").on("click", function() {
+
+// ------------CREATE VARIABLES -------------------
+		$("#start-button").hide();
+		$("#guessZone").html("Guesses remaining:  " + "<br>" + guesses + "<br>");
+        var array = ["char", "zerg", "protoss", "terran", "zealot", "gateway", "creep", "marine", "bunker", "queen"];
+		var randomIndex = Math.floor(Math.random() * array.length);
+
+		var word = array[randomIndex];		//Picks the word
+
+//-------------DECLARE METHODS-------------------
+		function finishWord(word){
+			        for (var c = 0; c <= (word.length - i - 1); c++) {
+			      
+			       		if(i!== word.length){		//Not sure why I need this but it made it work...
+			       			displayWord += "_";
+			       		}
+			       		$("#playZone").html(displayWord + "<br><br>");
+
+			          // For each iteration, add a space to the word
+			        }
+			     }
+
+//-------------PICK & PRINT THE SPACES-------------
+        finishWord(word);					
+        //Prints out spaces onscreen
+        	
+
+// -------------------START GAME------------------------
+//=====================================================
+		document.onkeyup = function(event) {			//TODO: Ask how to do this with JQuery
+			//This doesn't work yet..
+
+			if(event.key === word[i]){
+				i++;
+				displayWord = word.substring(0,i);
+				finishWord(word);	
+				if(displayWord === word){						//if the last letter is guessed correctly...
+
+					reset("You win! Play again?");	//call the reset function to start the game over.
+				}
+			}
+			else {
+				guesses--;
+				$("#guessZone").html("Guesses remaining:  " + "<br>" + guesses + "<br>");
+				if(guesses === 0){					//If out of guesses (supposed to start the game over...)
+				reset("You lose! Play again?");
+
+			}
+				}
+		}
+
+      });
+
+    });
+
+  </script>
+
+</body>
+</html>
